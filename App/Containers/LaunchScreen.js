@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
-import { Text, SafeAreaView } from 'react-native'
+import { Text, SafeAreaView, View } from 'react-native'
 import gradients from '../Themes/Gradients'
-import colors from '../Themes/Colors'
-import styled from 'styled-components/native'
-import LinearGradient from 'react-native-linear-gradient';
-
-
+import LottieView from 'lottie-react-native';
+import anim from '../Assets/Animations/ninja.json';
 export default class LaunchScreen extends Component {
   render() {
     return (
       <SafeAreaView style={{
-        flex:1,
-        backgroundColor: gradients.green
+        flex: 1,
+        backgroundColor: gradients.green,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 30,
+
       }}>
-       
-        <LinearGradient style={{flex: 1}} colors={['#4c669f', '#3b5998', '#192f6a']}>
-        <Text>Hello World!</Text>
-        </LinearGradient>
+        <LottieView style={{ width: '80%' }} source={anim} autoPlay loop />
       </SafeAreaView>
     )
   }
