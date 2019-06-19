@@ -9,14 +9,24 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
+      position: 'relative',
       backgroundColor: Colors.transparent
+    },
+    container: {
+      flex: 1,
+      position: 'relative',
+      paddingHorizontal: 20,
+      paddingTop: Metrics.doubleBaseMargin,
+      paddingHorizontal: Metrics.doubleBaseMargin,
+
     },
     backgroundImage: {
       position: 'absolute',
       top: 0,
       left: 0,
       bottom: 0,
-      right: 0
+      right: 0,
+      zIndex: -1,
     },
     container: {
       flex: 1,

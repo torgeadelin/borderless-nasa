@@ -5,6 +5,7 @@ const colors = {
   blue: '#3B607B',
   purple: '#532D6F',
   dark: '#222222',
+  white: '#ffffff',
   clear: 'rgba(0,0,0,0)',
 }
 
