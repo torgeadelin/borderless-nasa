@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { View, Image, Animated, Easing } from 'react-native'
 import images from '../Themes/Images'
 import { Title, Subtitle, Text } from '../Components/Typography'
 import { ApplicationStyles, Colors, Metrics } from '../Themes'
@@ -15,14 +15,37 @@ const Wrapper = styled.View`
   padding: ${Metrics.doubleBaseMargin + 'px'};
 `
 
-const Spaceman = styled.Image`
+const Spaceman = styled(Animated.Image)`
   width: ${isIphoneX() ? '120%' : '100%'};
   resizeMode: contain;
   position: absolute;
-  bottom: ${isIphoneX() ? '-100px' : '-130'};
+  /* bottom: ${isIphoneX() ? '-100px' : '-130'}; */
 `
 
 export default class LaunchScreen extends Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      animatedPosition: new Animated.Value(isIphoneX() ? -100 : -130)
+    }
+  }
+
+  componentDidMount() {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(this.state.animatedPosition, {
+          toValue: isIphoneX() ? -90 : -120,
+          duration: 1300,
+        }),
+        Animated.timing(this.state.animatedPosition, {
+          toValue: isIphoneX() ? -100 : -130,
+          duration: 1300,
+        })
+      ])
+    ).start()
+  }
+
   render() {
     return (
       <View style={ApplicationStyles.screen.mainContainer}>
@@ -33,10 +56,12 @@ export default class LaunchScreen extends Component {
             <Subtitle mt={Metrics.space.sm} center>Explore the NASA</Subtitle>
             <Text mt={Metrics.space.xxl} color={Colors.white} center>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s </Text>
             <WhiteSpace size="xxl" />
-            <Spaceman source={images.spaceman} />
+            <Spaceman style={{bottom: this.state.animatedPosition}} source={images.spaceman} />
           </Wrapper>
         </View>
       </View>
     )
   }
 }
+
+
