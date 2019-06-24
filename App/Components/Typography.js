@@ -7,7 +7,7 @@ import { paddingMixin, marginMixin } from '../Themes/Mixins'
 export const Title = styled.Text`
     ${Fonts.style.title};
     color: ${p => p.color ? p.color : Colors.dark};
-    text-align: ${p => p.center ? 'center' : 'initial'};
+    text-align: ${p => p.center ? 'center' : 'left'};
     ${paddingMixin};
     ${marginMixin};
 `
@@ -15,7 +15,7 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
     ${Fonts.style.subtitle};
     color: ${p => p.color ? p.color : Colors.dark};
-    text-align: ${p => p.center ? 'center' : 'initial'};
+    text-align: ${p => p.center ? 'center' : 'left'};
     ${paddingMixin};
     ${marginMixin};
 `
@@ -23,7 +23,7 @@ export const Subtitle = styled.Text`
 export const Text = styled.Text`
     ${Fonts.style.text};
     color: ${p => p.color ? p.color : Colors.dark};
-    text-align: ${p => p.center ? 'center' : 'initial'};
+    text-align: ${p => p.center ? 'center' : 'left'};
     ${paddingMixin};
     ${marginMixin};
 `

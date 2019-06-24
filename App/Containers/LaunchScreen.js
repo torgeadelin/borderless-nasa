@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, Animated, Easing } from 'react-native'
+import { View, Image, Animated, TouchableOpacity } from 'react-native'
 import images from '../Themes/Images'
 import { Title, Subtitle, Text } from '../Components/Typography'
 import { ApplicationStyles, Colors, Metrics } from '../Themes'
@@ -16,34 +16,43 @@ const Wrapper = styled.View`
 `
 
 const Spaceman = styled(Animated.Image)`
-  width: ${isIphoneX() ? '120%' : '100%'};
   resizeMode: contain;
   position: absolute;
-  /* bottom: ${isIphoneX() ? '-100px' : '-130'}; */
 `
 
+const BOTTOM_ANIMATED_INITIAL = isIphoneX() ? -100 : -130
+const BOTTOM_ANIMATED_FINAL = isIphoneX() ? -90 : -120
+
+const WIDTH_ANIMATED_INITIAL = isIphoneX() ? '120%' : '100%'
+const WIDTH_ANIMATED_FINAL = isIphoneX() ? '119%' : '99%'
+
+const FLOAT_ANIMATION_DURATION = 1500
+
+const floatAnimation = (value) => Animated.loop(
+  Animated.sequence([
+    Animated.timing(value, {
+      toValue: 1,
+      duration: FLOAT_ANIMATION_DURATION,
+    }),
+    Animated.timing(value, {
+      toValue: 0,
+      duration: FLOAT_ANIMATION_DURATION,
+    })
+  ])
+)
 export default class LaunchScreen extends Component {
+
   constructor(props) {
     super(props)
-    
+
     this.state = {
-      animatedPosition: new Animated.Value(isIphoneX() ? -100 : -130)
+      animatedPosition: new Animated.Value(0),
     }
+
   }
 
   componentDidMount() {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(this.state.animatedPosition, {
-          toValue: isIphoneX() ? -90 : -120,
-          duration: 1300,
-        }),
-        Animated.timing(this.state.animatedPosition, {
-          toValue: isIphoneX() ? -100 : -130,
-          duration: 1300,
-        })
-      ])
-    ).start()
+    floatAnimation(this.state.animatedPosition).start()
   }
 
   render() {
@@ -56,7 +65,17 @@ export default class LaunchScreen extends Component {
             <Subtitle mt={Metrics.space.sm} center>Explore the NASA</Subtitle>
             <Text mt={Metrics.space.xxl} color={Colors.white} center>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s </Text>
             <WhiteSpace size="xxl" />
-            <Spaceman style={{bottom: this.state.animatedPosition}} source={images.spaceman} />
+            <Spaceman
+              style={{
+                bottom: this.state.animatedPosition.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [BOTTOM_ANIMATED_INITIAL, BOTTOM_ANIMATED_FINAL]
+                }),
+                width: this.state.animatedPosition.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [WIDTH_ANIMATED_INITIAL, WIDTH_ANIMATED_FINAL]
+                })
+              }} source={images.spaceman} />
           </Wrapper>
         </View>
       </View>
