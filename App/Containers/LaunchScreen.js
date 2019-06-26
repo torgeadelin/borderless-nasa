@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, Image, Animated, TouchableOpacity } from 'react-native'
+import { View, Image, Animated } from 'react-native'
 import images from '../Themes/Images'
 import { Title, Subtitle, Text } from '../Components/Typography'
 import { ApplicationStyles, Colors, Metrics } from '../Themes'
 import styled from 'styled-components/native'
 import { WhiteSpace } from '../Components/Layout'
 import { isIphoneX } from '../Utils/iPhoneX'
+import Icon from 'react-native-vector-icons/Feather'
 const Wrapper = styled.View`
   flex: 1;
   position: relative;
@@ -48,7 +49,6 @@ export default class LaunchScreen extends Component {
     this.state = {
       animatedPosition: new Animated.Value(0),
     }
-
   }
 
   componentDidMount() {
@@ -63,6 +63,7 @@ export default class LaunchScreen extends Component {
             <Image style={ApplicationStyles.screen.backgroundImage} source={images.spacedust} />
             <Title color={Colors.white} center>Borderless</Title>
             <Subtitle mt={Metrics.space.sm} center>Explore the NASA</Subtitle>
+            <Icon name="home" size={25} color={Colors.dark} />
             <Text mt={Metrics.space.xxl} color={Colors.white} center>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s </Text>
             <WhiteSpace size="xxl" />
             <Spaceman

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styled from 'styled-components/native'
 import { Fonts, Colors } from '../Themes'
 import { paddingMixin, marginMixin } from '../Themes/Mixins'
