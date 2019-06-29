@@ -1,26 +1,39 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs'
+import { View, Text } from 'react-native'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation'
 import TabBarIcon from '../Components/TabBarIcon'
-import { TabBar } from '../Components/TabBar'
+import { TabBar } from 'react-native-animated-nav-tab-bar'
 import HomeScreen from '../Containers/HomeScreen'
-import { Colors, Metrics } from '../Themes';
+import { Colors } from '../Themes'
+import colors from '../Themes/Colors'
 
 const HomeStack = createStackNavigator({
-    Home: HomeScreen
+    Home: HomeScreen,
 })
 
 const DiscoverStack = createStackNavigator({
-    Discover: HomeScreen
+    Discover: () => (
+        <View style={{ flex: 1, backgroundColor: colors.gray }}>
+            <Text>Discover</Text>
+        </View>
+    ),
 })
 
 const ImagesStack = createStackNavigator({
-    Images: HomeScreen
+    Images: () => (
+        <View style={{ flex: 1, backgroundColor: colors.gray }}>
+            <Text>Images</Text>
+        </View>
+    ),
 })
 
 const ProfileStack = createStackNavigator({
-    Profile: HomeScreen
+    Profile: () => (
+        <View style={{ flex: 1, backgroundColor: colors.gray }}>
+            <Text>Profile</Text>
+        </View>
+    ),
 })
 
 HomeStack.navigationOptions = {
@@ -44,9 +57,9 @@ export default TabNavigator = createBottomTabNavigator(
         Home: HomeStack,
         Discover: DiscoverStack,
         Images: ImagesStack,
-        Profile: ProfileStack,
-
-    }, {
+        Profie: ProfileStack,
+    },
+    {
         tabBarOptions: {
             activeTintColor: Colors.tabBarSelected,
             inactiveTintColor: Colors.tabBarDefault,
