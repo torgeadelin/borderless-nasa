@@ -14,50 +14,42 @@ const lightShadow = css`
   shadow-opacity: 0.05;
   shadow-radius: 20;
   elevation: 1;
-`;
-
+`
 
 const ApplicationStyles = {
-  screen: {
-    mainContainer: {
-      flex: 1,
-      position: 'relative',
-      backgroundColor: Colors.transparent
+    screen: {
+        mainContainer: {
+            flex: 1,
+            position: 'relative',
+            backgroundColor: Colors.transparent,
+        },
+        container: {
+            flex: 1,
+            position: 'relative',
+            paddingHorizontal: 20,
+            paddingTop: Metrics.doubleBaseMargin,
+            paddingHorizontal: Metrics.doubleBaseMargin,
+        },
+        containerWithoutPadding: {
+            flex: 1,
+            position: 'relative',
+        },
+        backgroundImage: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: -1,
+        },
+        section: {
+            margin: Metrics.section,
+            padding: Metrics.baseMargin,
+        },
     },
-    container: {
-      flex: 1,
-      position: 'relative',
-      paddingHorizontal: 20,
-      paddingTop: Metrics.doubleBaseMargin,
-      paddingHorizontal: Metrics.doubleBaseMargin,
-
+    shadows: {
+        lightShadow: lightShadow,
     },
-    backgroundImage: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      zIndex: -1,
-    },
-    container: {
-      flex: 1,
-      paddingTop: Metrics.baseMargin,
-      backgroundColor: Colors.transparent
-    },
-    section: {
-      margin: Metrics.section,
-      padding: Metrics.baseMargin
-    },
-
-  },
-  shadows: {
-    lightShadow: lightShadow
-  }
-
 }
-
-
-
 
 export default ApplicationStyles

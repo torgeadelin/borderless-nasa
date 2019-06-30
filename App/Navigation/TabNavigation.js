@@ -64,6 +64,8 @@ export default TabNavigator = createBottomTabNavigator(
             activeTintColor: Colors.tabBarSelected,
             inactiveTintColor: Colors.tabBarDefault,
         },
-        tabBarComponent: props => <TabBar {...props} />,
+        tabBarComponent: props => (
+            <TabBar activeTabBackground={Colors.purpleLight} {...props} />
+        ),
     }
 )

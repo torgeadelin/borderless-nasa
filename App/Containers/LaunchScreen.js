@@ -3,6 +3,7 @@ import { View, Image, Animated, Easing, TouchableOpacity } from 'react-native'
 import images from '../Themes/Images'
 import { Title, Subtitle, Text } from '../Components/Typography'
 import { ApplicationStyles, Colors, Metrics, Images } from '../Themes'
+import { Button } from '../Components/Button'
 import styled from 'styled-components/native'
 import { WhiteSpace } from '../Components/Layout'
 import { isIphoneX } from '../Utils/iPhoneX'
@@ -20,7 +21,7 @@ const Wrapper = styled.View`
 const Spaceman = styled(Animated.Image)`
     resizemode: contain;
     position: absolute;
-    width: 120%;
+    width: ${isIphoneX() ? '120%' : '95%'};
 `
 
 const Logo = styled(Animated.Image)`
@@ -30,15 +31,8 @@ const Logo = styled(Animated.Image)`
     margin-bottom: ${Metrics.space.lg};
 `
 
-const Button = styled(Animated.createAnimatedComponent(TouchableOpacity))`
-    padding: ${Metrics.space.xl}px ${Metrics.space.xxl}px;
-    background: ${Colors.dark};
-    border-radius: 100;
-    z-index: 999;
-`
-
-const BOTTOM_ANIMATED_INITIAL = isIphoneX() ? -130 : -130
-const BOTTOM_ANIMATED_FINAL = isIphoneX() ? -120 : -120
+const BOTTOM_ANIMATED_INITIAL = isIphoneX() ? -130 : -170
+const BOTTOM_ANIMATED_FINAL = isIphoneX() ? -120 : -160
 
 const FLOAT_ANIMATION_DURATION = 1500
 
@@ -75,23 +69,23 @@ export default class LaunchScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            animatedPosition: new Animated.Value(0),
-            textPosition: new Animated.Value(0),
-            imagePosition: new Animated.ValueXY({ x: 0, y: 0 }),
+            floating: new Animated.Value(0),
+            textAndButtonFadeOut: new Animated.Value(0),
+            spacemanFadeOut: new Animated.ValueXY({ x: 0, y: 0 }),
         }
     }
 
     componentDidMount() {
-        floatAnimation(this.state.animatedPosition).start()
+        floatAnimation(this.state.floating).start()
     }
 
-    fadeEffect = value => {
+    fadeEffect = delay => {
         return {
-            top: this.state.textPosition.interpolate({
+            top: this.state.textAndButtonFadeOut.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, -Metrics.screenWidth / (3 + value)],
+                outputRange: [0, -Metrics.screenWidth / (3 + delay)],
             }),
-            opacity: this.state.textPosition.interpolate({
+            opacity: this.state.textAndButtonFadeOut.interpolate({
                 inputRange: [0, 1],
                 outputRange: [1, 0],
             }),
@@ -101,7 +95,7 @@ export default class LaunchScreen extends Component {
     render() {
         return (
             <View style={ApplicationStyles.screen.mainContainer}>
-                <View style={ApplicationStyles.screen.container}>
+                <View style={ApplicationStyles.screen.containerWithoutPadding}>
                     <Wrapper>
                         <Image
                             style={ApplicationStyles.screen.backgroundImage}
@@ -129,40 +123,36 @@ export default class LaunchScreen extends Component {
                         <Button
                             style={this.fadeEffect(4)}
                             onPress={() => {
-                                outAnimation(this.state.textPosition).start(
-                                    () => {
-                                        floatAnimation(
-                                            this.state.animatedPosition
-                                        ).stop()
-                                        this.props.navigation.navigate('Main')
-                                    }
-                                )
+                                outAnimation(
+                                    this.state.textAndButtonFadeOut
+                                ).start(() => {
+                                    floatAnimation(this.state.floating).stop()
+                                    this.props.navigation.navigate('Main')
+                                })
                                 imageOutAnimation(
-                                    this.state.imagePosition
+                                    this.state.spacemanFadeOut
                                 ).start()
                             }}
                         >
-                            <Text bold center color={Colors.white}>
-                                Continue
-                            </Text>
+                            Continue
                         </Button>
                         <WhiteSpace size="xxl" />
                         <Spaceman
                             style={{
-                                bottom: this.state.animatedPosition.interpolate(
+                                bottom: this.state.floating.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [
+                                        BOTTOM_ANIMATED_INITIAL,
+                                        BOTTOM_ANIMATED_FINAL,
+                                    ],
+                                }),
+                                transform: this.state.spacemanFadeOut.getTranslateTransform(),
+                                opacity: this.state.textAndButtonFadeOut.interpolate(
                                     {
                                         inputRange: [0, 1],
-                                        outputRange: [
-                                            BOTTOM_ANIMATED_INITIAL,
-                                            BOTTOM_ANIMATED_FINAL,
-                                        ],
+                                        outputRange: [1, 0],
                                     }
                                 ),
-                                transform: this.state.imagePosition.getTranslateTransform(),
-                                opacity: this.state.textPosition.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [1, 0],
-                                }),
                             }}
                             source={images.spaceman}
                         />
