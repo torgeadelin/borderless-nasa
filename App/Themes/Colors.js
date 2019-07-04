@@ -1,7 +1,7 @@
 import { Colors } from '.'
 
 const colors = {
-    red: '#9F3553',
+    red: '#D12757',
     fucsia: '#B94BA7',
     purple: '#5B3784',
     redLight: '#FFCEDC',

@@ -8,16 +8,17 @@ const ButtonWrapper = styled(
     Animated.createAnimatedComponent(TouchableOpacity)
 )`
     padding: ${Metrics.space.xl}px ${Metrics.space.xxl}px;
-    background: ${Colors.dark};
+    background: ${p => (p.bg ? p.bg : Color.dark)};
     border-radius: 100;
     z-index: 999;
+    font-weight: bold;
     ${p => p.fullWidth && 'width: 100%'};
 `
 
 export function Button(props) {
     return (
         <ButtonWrapper {...props}>
-            <Text center color={Colors.white}>
+            <Text bold center color={Colors.white}>
                 {props.children}
             </Text>
         </ButtonWrapper>

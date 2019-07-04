@@ -36,6 +36,7 @@ const ApplicationStyles = {
         },
         backgroundImage: {
             position: 'absolute',
+            resizeMode: 'stretch',
             top: 0,
             left: 0,
             bottom: 0,
