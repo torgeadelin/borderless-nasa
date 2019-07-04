@@ -27,7 +27,7 @@ const Wrapper = styled.View`
 `
 
 const Spaceman = styled(Animated.Image)`
-    resizemode: contain;
+    resize-mode: contain;
     position: absolute;
     width: ${isIphoneX() ? '90%' : '80%'};
     left: 5%;
@@ -43,7 +43,7 @@ const Logo = styled(Animated.Image)`
 
 const Planet = styled(Animated.Image)`
     position: absolute;
-    resizemode: contain;
+    resize-mode: contain;
     width: 100%;
     bottom: 0;
 `
