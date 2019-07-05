@@ -54,6 +54,7 @@ const BOTTOM_ANIMATED_FINAL = isIphoneX() ? -210 : -220
 
 const FLOAT_ANIMATION_DURATION = 1500
 
+// Floating animation for Spaceman
 const floatAnimation = value =>
     Animated.loop(
         Animated.sequence([
@@ -68,6 +69,7 @@ const floatAnimation = value =>
         ])
     )
 
+// Fade out animation for text, button and logo
 const outAnimation = value =>
     Animated.timing(value, {
         toValue: 1,
@@ -75,14 +77,16 @@ const outAnimation = value =>
         easing: BEZIER,
     })
 
+//Fade out animation for planet
 const planetOutAnimation = value =>
     Animated.timing(value, {
         toValue: 1,
         delay: 700,
-        duration: 1800,
+        duration: 1750,
         easing: BEZIER,
     })
 
+//Fade out animation for spaceman
 const imageOutAnimation = value =>
     Animated.timing(value, {
         toValue: { x: 0, y: Metrics.screenWidth },
@@ -127,7 +131,6 @@ export default class LaunchScreen extends Component {
                     style={{ width: '100%', height: '100%' }}
                 >
                     <StatusBar barStyle="light-content" />
-
                     <Planet
                         style={{
                             bottom: this.state.planetPosition.interpolate({

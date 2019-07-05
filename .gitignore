@@ -24,9 +24,11 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+package-lock.json
+
 # Android/IntelliJ
 #
-build/
+build/ 
 .idea
 .gradle
 local.properties

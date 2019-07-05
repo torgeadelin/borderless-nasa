@@ -3,10 +3,12 @@ import LaunchScreen from '../Containers/LaunchScreen'
 import TabNavigation from './TabNavigation'
 import { fadeIn } from 'react-navigation-transitions'
 
+import HomeScreen from '../Containers/Home/HomeScreen'
+
 // Manifest of possible screens
 const AppNavigation = createStackNavigator(
     {
-        Main: TabNavigation,
+        Main: HomeScreen,
         LaunchScreen: {
             screen: LaunchScreen,
         },
@@ -14,7 +16,7 @@ const AppNavigation = createStackNavigator(
     {
         // Default config for all screens
         headerMode: 'none',
-        initialRouteName: 'LaunchScreen',
+        initialRouteName: 'Main',
         transitionConfig: () => fadeIn(),
     }
 )
