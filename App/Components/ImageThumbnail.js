@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components/native'
 import { Metrics, ApplicationStyles } from '../Themes';
-import { TouchableWithoutFeedback } from 'react-native'
-
+import { TouchableWithoutFeedback, View } from 'react-native'
+import { Title, Text } from '../Components/Typography'
 
 const Thumbnail = styled.Image`
     width: 100%;
@@ -10,7 +10,6 @@ const Thumbnail = styled.Image`
     resize-mode: cover;
     border-radius: 20;
     margin-bottom: 15;
-    ${ApplicationStyles.shadows.lightShadow};
 `
 
 export default class ImageThumbnail extends Component {

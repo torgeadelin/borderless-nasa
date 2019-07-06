@@ -16,6 +16,14 @@ const lightShadow = css`
   elevation: 1;
 `
 
+const darkShadow = css`
+  shadow-color: #000000;
+  shadow-offset: {width: 0, height: 5};
+  shadow-opacity: 0.15;
+  shadow-radius: 20;
+  elevation: 1;
+`
+
 const ApplicationStyles = {
     screen: {
         mainContainer: {
@@ -34,13 +42,12 @@ const ApplicationStyles = {
             flex: 1,
             position: 'relative',
         },
-        backgroundImage: {
+        absoluteFillObject: {
             position: 'absolute',
             top: 0,
             left: 0,
             bottom: 0,
             right: 0,
-            zIndex: -1,
         },
         section: {
             margin: Metrics.section,
@@ -49,6 +56,7 @@ const ApplicationStyles = {
     },
     shadows: {
         lightShadow: lightShadow,
+        darkShadow: darkShadow,
     },
 }
 
