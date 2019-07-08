@@ -6,8 +6,9 @@ import ImageModal from '../../Components/ImageModal';
 import { PropTypes } from 'react'
 
 const images = [
-    { id: 1, source: Images.launchScreenBackground },
-    { id: 2, source: Images.spacedust },
+    { id: 1, source: Images.img1 },
+    { id: 2, source: Images.img2 },
+    { id: 3, source: Images.spacedust },
 ]
 
 
@@ -23,8 +24,8 @@ export default class HomeScreen extends React.Component {
         position: null,
     }
 
-    selectImage = async (selectedImage, index) => {
 
+    selectImage = async (selectedImage, index) => {
         const position = await this.thumbnails[index].current.measure()
         this.setState({
             selectedImage,
