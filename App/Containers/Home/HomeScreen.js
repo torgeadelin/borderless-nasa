@@ -8,7 +8,7 @@ import { PropTypes } from 'react'
 const images = [
     { id: 1, source: Images.img1 },
     { id: 2, source: Images.img2 },
-    { id: 3, source: Images.spacedust },
+    { id: 3, source: Images.img3 },
 ]
 
 
@@ -22,10 +22,13 @@ export default class HomeScreen extends React.Component {
     state = {
         selectedImage: null,
         position: null,
+        fetching: true,
+        hideThumbnailId: null,
     }
 
 
     selectImage = async (selectedImage, index) => {
+
         const position = await this.thumbnails[index].current.measure()
         this.setState({
             selectedImage,
@@ -35,9 +38,12 @@ export default class HomeScreen extends React.Component {
 
     closeModal() {
         this.setState({
-            selectedImage: null
+            selectedImage: null,
+            position: null,
         })
     }
+
+
 
     render() {
         const { selectedImage, position } = this.state
@@ -50,6 +56,7 @@ export default class HomeScreen extends React.Component {
                                 ref={this.thumbnails[index]}
                                 key={image.id}
                                 image={image}
+                                selected={selectedImage && selectedImage.id == image.id}
                                 onPress={() => this.selectImage(image, index)}
                             />)
                     })}
