@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, SafeAreaView, View, ScrollView } from 'react-native'
+import { Text, SafeAreaView, View, ScrollView, StatusBar, StyleSheet } from 'react-native'
 import ImageThumbnail from '../../Components/ImageThumbnail';
-import { Images, ApplicationStyles } from '../../Themes';
+import { Images, ApplicationStyles, Colors } from '../../Themes';
 import ImageModal from '../../Components/ImageModal';
 import { PropTypes } from 'react'
 
@@ -24,6 +24,7 @@ export default class HomeScreen extends React.Component {
         position: null,
         fetching: true,
         hideThumbnailId: null,
+        index: null,
     }
 
 
@@ -32,7 +33,8 @@ export default class HomeScreen extends React.Component {
         const position = await this.thumbnails[index].current.measure()
         this.setState({
             selectedImage,
-            position
+            position,
+            index
         })
     }
 
@@ -41,14 +43,17 @@ export default class HomeScreen extends React.Component {
             selectedImage: null,
             position: null,
         })
+        //Stop animation on modal
+
+        //Show footer after close modal
+        this.thumbnails[this.state.index].current.showFooter()
     }
-
-
 
     render() {
         const { selectedImage, position } = this.state
         return (
-            <SafeAreaView contentInsetAdjustmentBehaviour="automatic" style={ApplicationStyles.screen.mainContainer}>
+            <SafeAreaView contentInsetAdjustmentBehaviour="automatic" style={[ApplicationStyles.screen.mainContainer, { backgroundColor: Colors.dark }]}>
+                <StatusBar barStyle="light-content" />
                 <ScrollView style={ApplicationStyles.screen.container}>
                     {images.map((image, index) => {
                         return (
@@ -61,8 +66,10 @@ export default class HomeScreen extends React.Component {
                             />)
                     })}
                 </ScrollView>
-                {selectedImage && (
-                    <ImageModal closeModal={this.closeModal} image={selectedImage} {...{ position }} />
+                {!!selectedImage && (
+                    <View style={StyleSheet.absoluteFill}>
+                        <ImageModal closeModal={this.closeModal} image={selectedImage} {...{ position }} />
+                    </View>
                 )}
             </SafeAreaView>
 

@@ -7,12 +7,12 @@ const colors = {
     redLight: '#FFCEDC',
     fucsiaLight: '#FFD0F7',
     purpleLight: '#E7D3FF',
-    dark: '#080921',
+    dark: '#1D202B',
     white: '#ffffff',
     clear: 'rgba(0,0,0,0)',
     gray: '#F2F2F2',
 
-    tabBarSelected: '#5B3784',
+    tabBarSelected: '#FFFFFF',
     tabBarDefault: '#FFFFFF',
 }
 

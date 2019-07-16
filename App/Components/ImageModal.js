@@ -7,6 +7,8 @@ import { PropTypes } from 'react'
 import Animated from 'react-native-reanimated'
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { runSpring } from '../Utils/Animations'
+import { isIphoneX } from '../Utils/iPhoneX'
+import Icon from 'react-native-vector-icons/Feather'
 
 const {
     divide,
@@ -31,6 +33,13 @@ const {
     interpolate,
 } = Animated;
 
+const shadow = {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 1,
+}
 
 const DURATION = 1000
 const BEZIER = Easing.bezier(.95, .09, .34, .93)
@@ -43,22 +52,36 @@ const Container = styled.View`
 const Image = styled.Image`
     width: 100%;
     height: ${Metrics.screenWidth * 0.6};
-    border-top-left-radius: 20;
-    border-top-right-radius: 20;
+   
+`
+
+const CloseButton = styled.TouchableOpacity`
+    position: absolute;
+    top: ${isIphoneX() ? 40 : 30};
+    right: 20px;
+    background-color: ${Colors.dark};
+    border-radius: 100;
+    padding: 6px;
+    z-index: 999;
+    display: ${p => p.close ? 'none' : 'flex'};
+    opacity: 0.7;
+    
 `
 
 export default class ImageModal extends Component {
     constructor(props) {
         super(props)
+        this.state = State.UNDETERMINED
         const { x, y, width, height } = this.props.position
         this.state = {
-            backgroundColor: Colors.clear
+            backgroundColor: Colors.clear,
+            closeButton: false,
         }
 
         //Animation Values
         this.velocityY = new Value(0)
         this.state = new Value(State.UNDETERMINED);
-        this.opacity = new Value(1)
+        this.opacity = new Value(.7)
         this.translateX = new Value(x)
         this.translateY = new Value(y)
         this.width = new Value(width)
@@ -81,66 +104,80 @@ export default class ImageModal extends Component {
 
     }
 
+    closeButton = () => {
+        this.setState({
+            closeButton: true
+        })
+    }
+
     render() {
         const { image, position } = this.props
         const { translateX, translateY, width, height, opacity } = this
         const style = {
-            ...StyleSheet.absoluteFillObject,
-            overflow: 'hidden',
-            opacity: opacity,
             borderRadius: 15,
             width: width,
             height: height,
+            overflow: 'hidden',
             transform: [{ translateX }, { translateY }]
         }
         return (
-            <Container>
-                <PanGestureHandler
-                    onHandlerStateChange={this.onGestureEvent}
-                    onGestureEvent={this.onGestureEvent}>
-                    <Animated.View {...{ style }} >
-                        <Animated.Code>
-                            {
-                                () => block([
-                                    cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateX, 0)),
-                                    cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateY, 0)),
-                                    cond(eq(this.state, State.UNDETERMINED), runSpring(this.width, Metrics.screenWidth)),
-                                    cond(eq(this.state, State.UNDETERMINED), runSpring(this.height, Metrics.screenHeight)),
-                                    cond(and(eq(this.state, State.END), lessOrEq(this.velocityY, 0)), [
-                                        runSpring(this.translateX, 0),
-                                        runSpring(this.translateY, 0),
-                                        runSpring(this.width, Metrics.screenWidth),
-                                        runSpring(this.height, Metrics.screenHeight),
-                                    ]),
-                                    cond(and(eq(this.state, State.END), greaterThan(this.velocityY, 0)), [
-                                        runSpring(this.translateX, position.x),
-                                        runSpring(this.translateY, position.y),
-                                        runSpring(this.width, position.width),
-                                        runSpring(this.height, position.height),
-                                        cond(eq(this.height, position.height), call([], this.props.closeModal)),
-                                    ]),
-                                    cond(eq(this.state, State.ACTIVE), set(this.width, interpolate(this.translateY, {
-                                        inputRange: [Metrics.screenHeight / 4, Metrics.screenHeight - position.height],
-                                        outputRange: [Metrics.screenWidth, position.width],
-                                    }))),
-                                    cond(eq(this.state, State.ACTIVE), set(this.height, interpolate(this.translateY, {
-                                        inputRange: [Metrics.screenHeight / 4, Metrics.screenHeight - position.height],
-                                        outputRange: [Metrics.screenHeight, position.height],
-                                    }))),
+            <React.Fragment>
+                <Animated.Code>
+                    {
+                        () => block([
+                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateX, 0)),
+                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateY, 0)),
+                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.width, Metrics.screenWidth)),
+                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.height, Metrics.screenHeight)),
+                            cond(and(eq(this.state, State.END), lessOrEq(this.velocityY, 0)), [
+                                runSpring(this.translateX, 0),
+                                runSpring(this.translateY, 0),
+                                runSpring(this.width, Metrics.screenWidth),
+                                runSpring(this.height, Metrics.screenHeight),
+                            ]),
+                            cond(and(eq(this.state, State.END), greaterThan(this.velocityY, 0)), [
+                                runSpring(this.translateX, position.x),
+                                runSpring(this.translateY, position.y),
+                                runSpring(this.width, position.width),
+                                runSpring(this.height, position.height),
+                                cond(eq(this.height, position.height), call([], this.props.closeModal)),
+                            ]),
+                        ])
+                    }
+                </Animated.Code>
+                <View style={{ ...shadow }}>
 
-                                ])
-                            }
-                        </Animated.Code>
-                        <View>
+
+                    <Animated.View {...{ style }} >
+                        <View style={{
+                            ...StyleSheet.absoluteFillObject,
+                            width: null,
+                            height: null,
+                            borderRadius: 15,
+                        }}>
+                            <CloseButton close={this.state.closeButton} onPress={() => {
+                                this.setState(
+                                    { closeButton: true }
+                                )
+                                this.state.setValue(State.END)
+                                this.velocityY.setValue(10)
+                            }}>
+                                <Icon
+                                    name={'x'}
+                                    size={20}
+                                    color={Colors.white} />
+                            </CloseButton>
                             <Image source={image.source} />
-                            <ScrollView style={{ backgroundColor: Colors.white, padding: 20, height: '100%' }}>
-                                <Title>Hello World</Title>
-                                <Text>Lorem ipsum dolor</Text>
+
+                            <ScrollView style={{ backgroundColor: Colors.dark, padding: 20, height: '100%' }}>
+                                <Title color={Colors.white}>Hello World</Title>
+                                <Text color={Colors.white}>Lorem ipsum dolor</Text>
                             </ScrollView>
                         </View>
+
                     </Animated.View>
-                </PanGestureHandler>
-            </Container>
+                </View>
+            </React.Fragment >
 
         )
     }

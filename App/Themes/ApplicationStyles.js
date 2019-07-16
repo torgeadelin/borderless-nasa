@@ -19,7 +19,7 @@ const lightShadow = css`
 const darkShadow = css`
   shadow-color: #000000;
   shadow-offset: {width: 0, height: 5};
-  shadow-opacity: 0.15;
+  shadow-opacity: .3;
   shadow-radius: 20;
   elevation: 1;
 `

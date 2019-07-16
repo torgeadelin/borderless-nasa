@@ -8,7 +8,7 @@ import HomeScreen from '../Containers/Home/HomeScreen'
 // Manifest of possible screens
 const AppNavigation = createStackNavigator(
     {
-        Main: HomeScreen,
+        Main: TabNavigation,
         LaunchScreen: {
             screen: LaunchScreen,
         },
