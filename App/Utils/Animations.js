@@ -1,4 +1,4 @@
-import Animated from 'react-native-reanimated'
+import Animated, { Easing as RNEasing } from 'react-native-reanimated'
 import { Easing } from 'react-native'
 const {
     divide,
@@ -70,13 +70,12 @@ export function runTiming(value, dest) {
     };
 
     const config = {
-        duration: 300,
+        duration: 400,
         toValue: new Value(0),
-        easing: BEZIER,
+        easing: RN_BEZIER
     };
 
     return block([
-
         cond(clockRunning(clock), [
             // if the clock is already running we update the toValue, in case a new dest has been passed in
             set(config.toValue, dest),
@@ -94,11 +93,13 @@ export function runTiming(value, dest) {
         // if the animation is over we stop the clock
         cond(state.finished, debug('stop clock', stopClock(clock))),
         // we made the block return the updated position
-        set(value, state.position)
+        set(value, state.position),
+
     ]);
 }
 
 //Animation configs
 
+export const RN_BEZIER = RNEasing.bezier(0, .98, 1, 1)
 export const BEZIER = Easing.bezier(.95, .09, .34, .93)
 

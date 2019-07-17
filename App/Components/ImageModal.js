@@ -6,7 +6,7 @@ import { Title, Text } from '../Components/Typography'
 import { PropTypes } from 'react'
 import Animated from 'react-native-reanimated'
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { runSpring } from '../Utils/Animations'
+import { runTiming } from '../Utils/Animations'
 import { isIphoneX } from '../Utils/iPhoneX'
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -40,14 +40,6 @@ const shadow = {
     shadowRadius: 20,
     elevation: 1,
 }
-
-const DURATION = 1000
-const BEZIER = Easing.bezier(.95, .09, .34, .93)
-
-const Container = styled.View`
-    ${ApplicationStyles.screen.absoluteFillObject};
-    ${ApplicationStyles.shadows.darkShadow};
-`
 
 const Image = styled.Image`
     width: 100%;
@@ -125,27 +117,27 @@ export default class ImageModal extends Component {
                 <Animated.Code>
                     {
                         () => block([
-                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateX, 0)),
-                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.translateY, 0)),
-                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.width, Metrics.screenWidth)),
-                            cond(eq(this.state, State.UNDETERMINED), runSpring(this.height, Metrics.screenHeight)),
+                            cond(eq(this.state, State.UNDETERMINED), runTiming(this.translateX, 0)),
+                            cond(eq(this.state, State.UNDETERMINED), runTiming(this.translateY, 0)),
+                            cond(eq(this.state, State.UNDETERMINED), runTiming(this.width, Metrics.screenWidth)),
+                            cond(eq(this.state, State.UNDETERMINED), runTiming(this.height, Metrics.screenHeight)),
                             cond(and(eq(this.state, State.END), lessOrEq(this.velocityY, 0)), [
-                                runSpring(this.translateX, 0),
-                                runSpring(this.translateY, 0),
-                                runSpring(this.width, Metrics.screenWidth),
-                                runSpring(this.height, Metrics.screenHeight),
+                                runTiming(this.translateX, 0),
+                                runTiming(this.translateY, 0),
+                                runTiming(this.width, Metrics.screenWidth),
+                                runTiming(this.height, Metrics.screenHeight),
                             ]),
                             cond(and(eq(this.state, State.END), greaterThan(this.velocityY, 0)), [
-                                runSpring(this.translateX, position.x),
-                                runSpring(this.translateY, position.y),
-                                runSpring(this.width, position.width),
-                                runSpring(this.height, position.height),
+                                runTiming(this.translateX, position.x),
+                                runTiming(this.translateY, position.y),
+                                runTiming(this.width, position.width),
+                                runTiming(this.height, position.height),
                                 cond(eq(this.height, position.height), call([], this.props.closeModal)),
                             ]),
                         ])
                     }
                 </Animated.Code>
-                <View style={{ ...shadow }}>
+                <View style={{ ...shadow, backgroundColor: Colors.dark }}>
 
 
                     <Animated.View {...{ style }} >
@@ -167,11 +159,11 @@ export default class ImageModal extends Component {
                                     size={20}
                                     color={Colors.white} />
                             </CloseButton>
-                            <Image source={image.source} />
+                            <Image source={{ uri: image.links[0].href }} />
 
                             <ScrollView style={{ backgroundColor: Colors.dark, padding: 20, height: '100%' }}>
-                                <Title color={Colors.white}>Hello World</Title>
-                                <Text color={Colors.white}>Lorem ipsum dolor</Text>
+                                <Title color={Colors.white}>{image.data[0].title}</Title>
+                                <Text color={Colors.white}>{image.data[0].secondary_creator}</Text>
                             </ScrollView>
                         </View>
 

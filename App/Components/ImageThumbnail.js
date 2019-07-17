@@ -6,6 +6,7 @@ import { Title, Text, Subtitle } from '../Components/Typography'
 import { Flex } from './Layout';
 import { BlackGradient } from '../Themes/Gradients'
 import { BEZIER } from '../Utils/Animations'
+import { truncate } from '../Utils/TextFiltering';
 
 const offset = (v) => (Platform.OS === "android" ? (v + StatusBar.currentHeight) : v);
 
@@ -21,6 +22,7 @@ const Container = styled.View`
     margin-bottom: ${Metrics.radius};
     height: ${Metrics.screenWidth * 0.6};
     ${ApplicationStyles.shadows.darkShadow};
+    background-color: ${Colors.dark};
 `
 
 const Wrapper = styled(Animated.View)`
@@ -72,13 +74,14 @@ export default class ImageThumbnail extends Component {
     render() {
         const { ref } = this
         const { image } = this.props
+        var { title, secondary_creator } = this.props.image.data[0]
 
         return (
             <TouchableWithoutFeedback onPress={this.customOnPress}>
                 <Animated.View >
                     <Container {...{ ref }}>
-                        <Thumbnail imageStyle={{ borderRadius: Metrics.radius }} source={image.source}>
-                            <Wrapper style={{
+                        <Thumbnail imageStyle={{ borderRadius: Metrics.radius }} source={{ uri: image.links[0].href }}>
+                        <Wrapper style={{
                                 transform: [
                                     {
                                         translateY: this.position.interpolate({
@@ -98,8 +101,8 @@ export default class ImageThumbnail extends Component {
                                                 })
                                             }
                                         ]
-                                    }} bold color={Colors.white}>Hello World</Subtitle>
-                                    <Text style={{
+                                    }} bold color={Colors.white}>{truncate(title, 25)}</Subtitle>
+                                    {secondary_creator && <Text style={{
                                         transform: [
                                             {
                                                 translateY: this.position.interpolate({
@@ -108,7 +111,7 @@ export default class ImageThumbnail extends Component {
                                                 })
                                             }
                                         ]
-                                    }} mt={-5} color={Colors.white}>Subtitle is here</Text>
+                                    }} mt={-5} color={Colors.white}>{truncate(secondary_creator)}</Text>}
                                 </Footer>
                             </Wrapper>
                         </Thumbnail>
