@@ -9,6 +9,8 @@ const images = {
     img1: require('../Images/img1.jpg'),
     img2: require('../Images/img2.jpg'),
     img3: require('../Images/img3.jpg'),
+    homeHeaderBackground: require('../Images/homeHeaderBackground.png'),
+    blur: require('../Images/blur.png'),
 }
 
 export default images

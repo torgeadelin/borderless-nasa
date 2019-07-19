@@ -10,6 +10,7 @@ const colors = {
     dark: '#1D202B',
     white: '#ffffff',
     clear: 'rgba(0,0,0,0)',
+    white50: 'rgba(255, 255, 255, 0.5)',
     gray: '#F2F2F2',
 
     tabBarSelected: '#FFFFFF',

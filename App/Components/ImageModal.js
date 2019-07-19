@@ -6,7 +6,7 @@ import { Title, Text } from '../Components/Typography'
 import { PropTypes } from 'react'
 import Animated from 'react-native-reanimated'
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { runTiming } from '../Utils/Animations'
+import { runTiming, runSpring } from '../Utils/Animations'
 import { isIphoneX } from '../Utils/iPhoneX'
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -73,7 +73,6 @@ export default class ImageModal extends Component {
         //Animation Values
         this.velocityY = new Value(0)
         this.state = new Value(State.UNDETERMINED);
-        this.opacity = new Value(.7)
         this.translateX = new Value(x)
         this.translateY = new Value(y)
         this.width = new Value(width)
@@ -133,16 +132,16 @@ export default class ImageModal extends Component {
                                 runTiming(this.width, position.width),
                                 runTiming(this.height, position.height),
                                 cond(eq(this.height, position.height), call([], this.props.closeModal)),
+
                             ]),
                         ])
                     }
                 </Animated.Code>
-                <View style={{ ...shadow, backgroundColor: Colors.dark }}>
-
-
+                <View style={{ ...shadow }}>
                     <Animated.View {...{ style }} >
                         <View style={{
                             ...StyleSheet.absoluteFillObject,
+                            backgroundColor: Colors.dark,
                             width: null,
                             height: null,
                             borderRadius: 15,
@@ -161,10 +160,15 @@ export default class ImageModal extends Component {
                             </CloseButton>
                             <Image source={{ uri: image.links[0].href }} />
 
-                            <ScrollView style={{ backgroundColor: Colors.dark, padding: 20, height: '100%' }}>
+                            <Animated.ScrollView style={{
+                                backgroundColor: Colors.dark,
+                                padding: 20,
+                                height: '100%'
+                            }}>
                                 <Title color={Colors.white}>{image.data[0].title}</Title>
                                 <Text color={Colors.white}>{image.data[0].secondary_creator}</Text>
-                            </ScrollView>
+                                <Text mt={Metrics.space.xl} color={Colors.white}>{image.data[0].description}</Text>
+                            </Animated.ScrollView>
                         </View>
 
                     </Animated.View>

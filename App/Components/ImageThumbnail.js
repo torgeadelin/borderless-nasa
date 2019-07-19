@@ -33,7 +33,7 @@ const Wrapper = styled(Animated.View)`
 
 const Footer = styled(BlackGradient)`
     width: 100%;
-    padding: ${Metrics.space.lg}px ${Metrics.space.xl}px;
+    padding: ${Metrics.space.xl}px ${Metrics.space.xl}px;
     border-bottom-left-radius: ${Metrics.radius};
     border-bottom-right-radius: ${Metrics.radius};
 `
@@ -81,7 +81,7 @@ export default class ImageThumbnail extends Component {
                 <Animated.View >
                     <Container {...{ ref }}>
                         <Thumbnail imageStyle={{ borderRadius: Metrics.radius }} source={{ uri: image.links[0].href }}>
-                        <Wrapper style={{
+                            <Wrapper style={{
                                 transform: [
                                     {
                                         translateY: this.position.interpolate({

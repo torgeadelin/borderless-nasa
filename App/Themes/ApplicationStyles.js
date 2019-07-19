@@ -24,6 +24,17 @@ const darkShadow = css`
   elevation: 1;
 `
 
+const redShadow = css`
+  position: relative;
+  shadow-color: #D12757;
+  shadow-offset: {width: 0, height: 5};
+  shadow-opacity: .3;
+  shadow-radius: 60;
+  elevation: 1;
+  z-index: 999;
+
+`
+
 const ApplicationStyles = {
     screen: {
         mainContainer: {
@@ -57,6 +68,7 @@ const ApplicationStyles = {
     shadows: {
         lightShadow: lightShadow,
         darkShadow: darkShadow,
+        redShadow: redShadow,
     },
 }
 

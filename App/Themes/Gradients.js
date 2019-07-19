@@ -14,7 +14,13 @@ export const BlackGradient = (props) => (
 )
 
 export const RedGradient = (props) => (
-    <LinearGradient {...props} colors={gradients.red} start={{ x: 0, y: 1 }} end={{ x: 0.7, y: 1 }}>
+    <LinearGradient {...props} colors={gradients.red} start={{ x: 0, y: 1 }} end={{ x: 0.7, y: 0 }}>
+        {props.children}
+    </LinearGradient>
+)
+
+export const GenericGradient = (props) => (
+    <LinearGradient {...props} start={{ x: 0, y: 1 }} end={{ x: 0.7, y: 0 }}>
         {props.children}
     </LinearGradient>
 )
