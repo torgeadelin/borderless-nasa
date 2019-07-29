@@ -105,7 +105,7 @@ export class HomeScreen extends React.Component {
                         handleOnSearchRequest={this.fetchData} />
 
                     <Animated.ScrollView
-                        bounces={false}
+
                         style={{ padding: 20 }}
                         scrollEventThrottle={16}
                         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollOffsetY } } }], { useNativeDriver: true })}
