@@ -2,10 +2,11 @@ import { takeLatest, all } from 'redux-saga/effects'
 import API from '../Services/Api'
 
 /* ------------- Types ------------- */
-
+import { NasaImagesTypes } from '../Redux/NasaImagesRedux'
 
 /* ------------- Sagas ------------- */
 
+import { getNasaImages } from './NasaImagesSagas'
 
 /* ------------- API ------------- */
 
@@ -15,8 +16,9 @@ const api = API.create()
 
 /* ------------- Connect Types To Sagas ------------- */
 
-export default function * root () {
+export default function* root() {
   yield all([
     // some sagas receive extra parameters in addition to an action
+    takeLatest(NasaImagesTypes.NASA_IMAGES_REQUEST, getNasaImages, api)
   ])
 }

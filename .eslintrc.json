@@ -16,6 +16,8 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": ["react"],
-    "rules": {}
+    "plugins": ["react", "styled-components-config"],
+    "rules": {
+        "styled-components-config/rule-name": 2
+    }
 }

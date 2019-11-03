@@ -15,6 +15,7 @@ export const Subtitle = styled(Animated.Text)`
     ${Fonts.style.subtitle};
     color: ${p => (p.color ? p.color : Colors.dark)};
     text-align: ${p => (p.center ? 'center' : 'left')};
+    font-weight: ${p => (p.bold == true ? 'bold' : 'normal')};
     ${paddingMixin};
     ${marginMixin};
 `

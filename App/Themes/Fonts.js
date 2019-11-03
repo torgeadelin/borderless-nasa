@@ -4,7 +4,7 @@ const type = {
 }
 
 const size = {
-    title: 45,
+    title: 40,
     subtitle: 20,
     text: 16,
     small: 14,
